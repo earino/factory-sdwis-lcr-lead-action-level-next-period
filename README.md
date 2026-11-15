@@ -15,6 +15,14 @@ configs:
     path: extract/private/holdout.csv
 ---
 
+<!-- dataset-factory:links -->
+**Dataset Factory · v-5917644e4c46057e**
+
+[Dataset website](https://earino.github.io/factory-sdwis-lcr-lead-action-level-next-period/versions/v-5917644e4c46057e/) · [GitHub release](https://github.com/earino/factory-sdwis-lcr-lead-action-level-next-period/releases/tag/v-5917644e4c46057e) · [Hugging Face](https://huggingface.co/datasets/earino/factory-sdwis-lcr-lead-action-level-next-period/tree/v-5917644e4c46057e) · [Catalogue](https://earino.github.io/dataset-factory-site/)
+
+Artifact: b08c6a7bbfdcbbffb33de64be0cde0485e147bc0f82d96185db1b34ecdaab857
+<!-- /dataset-factory:links -->
+
 # Will a U.S. community water system exceed the lead action level in its next Lead and Copper Rule monitoring period? Forward prediction from prior 90th-percentile results
 
 At the first day of a community water system's next Lead and Copper Rule tap-sampling period, will that period's reported 90th-percentile lead concentration exceed the 15 µg/L action level?
