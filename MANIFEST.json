@@ -1,0 +1,445 @@
+{
+  "schema": "factory-1",
+  "dataset": "sdwis-lcr-lead-action-level-next-period",
+  "version": "v-5917644e4c46057e",
+  "artifact_version": "b08c6a7bbfdcbbffb33de64be0cde0485e147bc0f82d96185db1b34ecdaab857",
+  "assets": {
+    "LICENSE-EVIDENCE.json": {
+      "sha256": "8fd2cc5fddfe08dd730eebb30f469a7e766ae0ab8ac0a6588cb17ca5df367dfb",
+      "bytes": 705,
+      "asset_name": "LICENSE-EVIDENCE.json"
+    },
+    "LICENSE.md": {
+      "sha256": "534f3a9515ef2ba52f829f2ea93b70c27c9a793d63074520ca5d55f37b62b302",
+      "bytes": 1452,
+      "asset_name": "LICENSE.md"
+    },
+    "README.md": {
+      "sha256": "c5fb04c9327aa64330235a7a220858b414234ade41beb02b6e5a6b9e2c928087",
+      "bytes": 6966,
+      "asset_name": "README.md"
+    },
+    "SOURCES.json": {
+      "sha256": "ac44d61878e927a5bf151f53dad6b749963614d339e2d4da445a483d52ee67d2",
+      "bytes": 866,
+      "asset_name": "SOURCES.json"
+    },
+    "evaluation.json": {
+      "sha256": "d82ff22e703c0ef2c3863fdc0b935e7cec1aeea330bf1d14f6f523d5a1b7dfe6",
+      "bytes": 3687,
+      "asset_name": "evaluation.json"
+    },
+    "extract/meta.json": {
+      "sha256": "98244d185dfe12cd41423606373ebe3292ed4afad427a9c686f87d4c9204d73d",
+      "bytes": 2073,
+      "asset_name": "extract__meta.json"
+    },
+    "extract/private/holdout.csv": {
+      "sha256": "61109a5ca4d04ec1b37a57b371eafe1180aa320609d997ea760c2fab32275733",
+      "bytes": 1794860,
+      "asset_name": "extract__private__holdout.csv"
+    },
+    "extract/public/eval.csv": {
+      "sha256": "081270314f95089ab88f992b1117f2413ce8cad1791c32d9d9f6a5f7f364e401",
+      "bytes": 1790624,
+      "asset_name": "extract__public__eval.csv"
+    },
+    "extract/public/train.csv": {
+      "sha256": "53ed51a93bc6eac17e7ed053d8bb86e754be83bbf331e4b0e26993fdb0797fb8",
+      "bytes": 26019143,
+      "asset_name": "extract__public__train.csv"
+    },
+    "extract/quality.json": {
+      "sha256": "47da9b697ea6de639cd472096c039dee9d5874145179b2247ac0f1801b156d38",
+      "bytes": 23522,
+      "asset_name": "extract__quality.json"
+    },
+    "get_dataset.py": {
+      "sha256": "fad89222d50f9d9709225c34909be74c591df409c08b8b5951eba9d3cadfdd48",
+      "bytes": 3680,
+      "asset_name": "get_dataset.py"
+    },
+    "qualification.json": {
+      "sha256": "26d557203f68b6a2882d92d4480e78a28a6348ad72fe2a5c24ef916449b2cdb8",
+      "bytes": 18020,
+      "asset_name": "qualification.json"
+    },
+    "reproduction/LICENSE-CC0-1.0.txt": {
+      "sha256": "a2010f343487d3f7618affe54f789f5487602331c0a8d03f49e9a7c547cf0499",
+      "bytes": 7048,
+      "asset_name": "reproduction__LICENSE-CC0-1.0.txt"
+    },
+    "reproduction/LICENSE-MIT.txt": {
+      "sha256": "56b932ff064e5da113ae10175c8546325f64f26e1ece71683ffcbf8b2304fe1c",
+      "bytes": 1124,
+      "asset_name": "reproduction__LICENSE-MIT.txt"
+    },
+    "reproduction/artifact_scrub.py": {
+      "sha256": "8c663253e691a7b8751f9c853b40a3752a833360caafb1ea8e8f534e64af4b68",
+      "bytes": 11369,
+      "asset_name": "reproduction__artifact_scrub.py"
+    },
+    "reproduction/build.py": {
+      "sha256": "413be9d4c6783257f9d3aa195dc10248ed074433dd9bd8a120aee461a4d612e1",
+      "bytes": 38162,
+      "asset_name": "reproduction__build.py"
+    },
+    "reproduction/construction.json": {
+      "sha256": "de5667de1df51f87d486b740b309e72f4d5ae344021f4782827b0e4dfe4354cd",
+      "bytes": 24255,
+      "asset_name": "reproduction__construction.json"
+    },
+    "reproduction/dataset_package.py": {
+      "sha256": "c2364defe58dcc99322be59a1bb04894ce00e823ce37afeb37bc31012f744327",
+      "bytes": 7927,
+      "asset_name": "reproduction__dataset_package.py"
+    },
+    "reproduction/dataset_run.py": {
+      "sha256": "8085fae14d6e93b852e692e18c1ef72113a3601f48f78901b6d1ae6db278de57",
+      "bytes": 12381,
+      "asset_name": "reproduction__dataset_run.py"
+    },
+    "reproduction/get_dataset.py": {
+      "sha256": "fad89222d50f9d9709225c34909be74c591df409c08b8b5951eba9d3cadfdd48",
+      "bytes": 3680,
+      "asset_name": "reproduction__get_dataset.py"
+    },
+    "reproduction/leakage_battery.py": {
+      "sha256": "adbf7ee0aca0012b78cc1f1e4aeb968a23717cae30f66a02e080215e75f830e3",
+      "bytes": 17379,
+      "asset_name": "reproduction__leakage_battery.py"
+    },
+    "reproduction/provenance.json": {
+      "sha256": "11a9c4f355a6345b1a64b1bb34afd669daa68a62b53b6635c45f9861295a81a7",
+      "bytes": 573,
+      "asset_name": "reproduction__provenance.json"
+    },
+    "reproduction/qualify_dataset.py": {
+      "sha256": "bff6d43d0904182e2612c32bab702e41addbf389904a236c209e78be39e37a6b",
+      "bytes": 66067,
+      "asset_name": "reproduction__qualify_dataset.py"
+    },
+    "reproduction/recovery_recipes.py": {
+      "sha256": "f64c542fcda232169c95ace17421b45275194b934938c0ea4c9b68e6f844ad0e",
+      "bytes": 17609,
+      "asset_name": "reproduction__recovery_recipes.py"
+    },
+    "reproduction/requirements.txt": {
+      "sha256": "5c72f3268174d20364624f76680e189c408a05dba2e7b8cfe12d077b3865e7f0",
+      "bytes": 160,
+      "asset_name": "reproduction__requirements.txt"
+    },
+    "reproduction/source.json": {
+      "sha256": "de64715560066c113267e7962ceadc36fe0ac097163c615fbfd16d0bd31ccfe8",
+      "bytes": 20613,
+      "asset_name": "reproduction__source.json"
+    },
+    "reproduction/source_io.py": {
+      "sha256": "0c60eed4968cd342148efbaac7e4fa98f00708d8e6c14c0929928687b9af1ea3",
+      "bytes": 5607,
+      "asset_name": "reproduction__source_io.py"
+    },
+    "reproduction/train.py": {
+      "sha256": "a3c6bcf13735bc85c52129ded68f839090dffdc266ebc3810dc61b2e6ea5e7e8",
+      "bytes": 2500,
+      "asset_name": "reproduction__train.py"
+    },
+    "reproduction/validate.py": {
+      "sha256": "b597e7f84fed614e64b4a86fbecbd6ec0145916a24d0d221a796586976418e7b",
+      "bytes": 1277,
+      "asset_name": "reproduction__validate.py"
+    },
+    "reproduction/validate.sh": {
+      "sha256": "3f06ca48f11c2e05d331b4d8394284925de660c1d4b086d2f8243959e83b7e6d",
+      "bytes": 482,
+      "asset_name": "reproduction__validate.sh"
+    },
+    "source-checks.json": {
+      "sha256": "428a97aca5d9cbafefb48c40b4c4e1a72d8ab4944147dec52091ae8a3cdfbd4d",
+      "bytes": 15840,
+      "asset_name": "source-checks.json"
+    },
+    "source-snapshot.tar.gz": {
+      "sha256": "300815adf762a3ec0f4b75af358497b2e7920649313bfb8dbfb80f5b3c137c1d",
+      "bytes": 557800556,
+      "asset_name": "source-snapshot.tar.gz"
+    },
+    "verify_dataset.py": {
+      "sha256": "f4a4bb7f565cdbd075c520621f881876b491eaed91a5e6e70afb31e4753f9834",
+      "bytes": 1276,
+      "asset_name": "verify_dataset.py"
+    }
+  },
+  "source": {
+    "attribution": "No credit is required by the publisher. Recommended credit: \"U.S. Environmental Protection Agency, Enforcement and Compliance History Online (ECHO), SDWA dataset derived from the Safe Drinking Water Information System (SDWIS), extracted <quarter>\".",
+    "citation": "",
+    "documentation_url": "https://echo.epa.gov/tools/data-downloads/sdwa-download-summary",
+    "license": "U.S. Government work \u2014 public domain in the United States under 17 U.S.C. \u00a7 105 (EPA Standard Open Data License); no publisher licence grant is required and none is implied for any third-party material",
+    "publisher": "U.S. Environmental Protection Agency (EPA) \u2014 Enforcement and Compliance History Online (ECHO), SDWA dataset compiled from the Safe Drinking Water Information System (SDWIS); underlying LCR results are reported to EPA by state/tribal primacy agencies",
+    "redistribution": true,
+    "terms_excerpt": "Unless otherwise specified, all data produced by the U.S EPA is by default in the public domain and is not subject to domestic copyright protection under 17 U.S.C. \u00a7 105.",
+    "terms_url": "https://edg.epa.gov/EPA_Data_License.htm",
+    "urls": [
+      "https://echo.epa.gov/files/echodownloads/SDWA_latest_downloads.zip"
+    ]
+  },
+  "task": {
+    "decision_user": "State/tribal drinking-water primacy agency compliance staff and utility corrosion-control managers allocating corrosion-control optimization, lead service line replacement, and sampling support before the next round begins.",
+    "features": [
+      {
+        "availability": "prior period result measured before the decision instant",
+        "evidence_url": "https://echo.epa.gov/tools/data-downloads/sdwa-download-summary",
+        "meaning": "Lead 90th-percentile concentration reported for the immediately preceding monitoring period, converted to mg/L.",
+        "name": "prior_pb90_mg_l"
+      },
+      {
+        "availability": "same prior period; missing copper remains missing",
+        "evidence_url": "https://echo.epa.gov/tools/data-downloads/sdwa-download-summary",
+        "meaning": "Copper 90th-percentile concentration for the same prior period, converted to mg/L.",
+        "name": "prior_cu90_mg_l"
+      },
+      {
+        "availability": "deterministic transform of a pre-decision result",
+        "evidence_url": "https://www.ecfr.gov/on/2023-01-01/title-40/chapter-I/subchapter-D/part-141/subpart-I/section-141.80",
+        "meaning": "prior_pb90_mg_l divided by the 0.015 mg/L action level.",
+        "name": "prior_pb90_ratio_to_al"
+      },
+      {
+        "availability": "derived from dated records; missing when fewer than two prior records exist",
+        "evidence_url": "https://echo.epa.gov/tools/data-downloads/sdwa-download-summary",
+        "meaning": "Difference between the prior PB90 result and the PB90 result before it, in mg/L.",
+        "name": "pb90_change_from_previous"
+      },
+      {
+        "availability": "count of dated prior records",
+        "evidence_url": "https://echo.epa.gov/tools/data-downloads/sdwa-download-summary",
+        "meaning": "Count of dated PB90 monitoring periods on record before the target period start.",
+        "name": "n_prior_periods_observed"
+      },
+      {
+        "availability": "all contributing records precede the decision instant",
+        "evidence_url": "https://www.ecfr.gov/on/2023-01-01/title-40/chapter-I/subchapter-D/part-141/subpart-I/section-141.80",
+        "meaning": "Whether any PB90 record before the target period start exceeded 0.015 mg/L.",
+        "name": "ever_exceeded_before"
+      },
+      {
+        "availability": "calendar difference of prior end and target start",
+        "evidence_url": "https://echo.epa.gov/tools/data-downloads/sdwa-download-summary",
+        "meaning": "Days between the prior period SAMPLING_END_DATE and the target period SAMPLING_START_DATE.",
+        "name": "gap_days_between_periods"
+      },
+      {
+        "availability": "calendar difference of prior start and end",
+        "evidence_url": "https://echo.epa.gov/tools/data-downloads/sdwa-download-summary",
+        "meaning": "Length of the prior monitoring period in days.",
+        "name": "prior_period_length_days"
+      },
+      {
+        "availability": "current-vintage system attribute treated as time-invariant; historical availability not proven",
+        "evidence_url": "https://echo.epa.gov/tools/data-downloads/sdwa-download-summary",
+        "meaning": "Estimated average daily population served, a system-size measure.",
+        "name": "population_served_count"
+      },
+      {
+        "availability": "current-vintage system attribute treated as time-invariant; historical availability not proven",
+        "evidence_url": "https://echo.epa.gov/tools/data-downloads/sdwa-download-summary",
+        "meaning": "Ground water, surface water or purchased source category.",
+        "name": "primary_source_code"
+      },
+      {
+        "availability": "current-vintage system attribute treated as time-invariant; historical availability not proven",
+        "evidence_url": "https://echo.epa.gov/tools/data-downloads/sdwa-download-summary",
+        "meaning": "Ownership category.",
+        "name": "owner_type_code"
+      },
+      {
+        "availability": "system attribute when present, otherwise the first two PWSID characters; current-vintage and assumed stable",
+        "evidence_url": "https://echo.epa.gov/tools/data-downloads/sdwa-download-summary",
+        "meaning": "Two-character state or EPA region primacy code.",
+        "name": "primacy_agency_code"
+      },
+      {
+        "availability": "dated violations before the decision instant; identified by the RULE_CODE 350 anchor and VALUE_TYPE-scoped violation codes",
+        "evidence_url": "https://echo.epa.gov/tools/data-downloads/sdwa-download-summary",
+        "meaning": "Count of identified Lead and Copper Rule violations with NON_COMPL_PER_BEGIN_DATE before the target period start.",
+        "name": "prior_lcr_violations_count"
+      },
+      {
+        "availability": "dated LSLR milestone from the EVENT_MILESTONE_CODE field before the decision instant",
+        "evidence_url": "https://echo.epa.gov/tools/data-downloads/sdwa-download-summary",
+        "meaning": "Whether an identified lead service line replacement milestone was recorded before the target period start.",
+        "name": "prior_lslr_milestone"
+      }
+    ],
+    "outcome_horizon": "One monitoring period: 6 months, 12 months, or 36 months after the decision instant depending on the system's schedule category; pairs whose target period starts more than 4 years after the decision instant are excluded.",
+    "population": "Community water systems in the EPA ECHO SDWA national download whose PWS_TYPE_CODE field is CWS and that have at least two PB90 lead 90th-percentile summary records, where the target PB90 period starts strictly after the prior PB90 period end and no more than four years later, with target period start on or before 2023-12-31. No filter on current PWS_ACTIVITY_CODE. Primacy agencies with fewer than 20 eligible pairs whose prior period ended before 2014-01-01 are excluded from all splits; this floor uses training-era feature dates only.",
+    "prediction_time": "First day, the SAMPLING_START_DATE, of the target PB90 monitoring period. Every prior lead or copper measurement, violation date and milestone date used is strictly before that date; current-vintage system attributes are time-invariant covariates.",
+    "question": "At the first day of a community water system's next Lead and Copper Rule tap-sampling period, will that period's reported 90th-percentile lead concentration exceed the 15 \u00b5g/L action level?",
+    "simple_references": "Persistence: predict the prior period exceedance status. Threshold rule: predict 1 whenever prior_pb90_mg_l is above 0.015. Calendar control: exceedance rate by target year. Identity controls: primacy-agency rate, owner-type rate and population-size band rate. Majority class rate per split. Report the base rate among rows whose prior period was at or below the action level, because that is where operational value sits.",
+    "split_policy": "Chronological on target SAMPLING_START_DATE, fixed before any model fitting: train 1995-01-01 to 2013-12-31; eval 2014-01-01 to 2018-12-31; holdout 2019-01-01 to 2023-12-31. Embargo: drop any row whose feature (prior) period SAMPLING_END_DATE is on or after the first day of the split it would fall into, so no feature window crosses a boundary. Rows are never shuffled; each system contributes at most one row per target period, and duplicate PB90 records for the same period are collapsed to the latest SAR_LAST_REPORTED_DATE before pairing. Boundaries and the agency floor are not to be revised after seeing any metric.",
+    "target": "1 if the target monitoring period's PB90 record (lead 90th-percentile summary, SDWA_LCR_SAMPLES.CONTAMINANT_CODE = PB90) has SAMPLE_MEASURE > 0.015 mg/L, else 0. Target periods are restricted to SAMPLING_START_DATE <= 2023-12-31 so the 15 \u00b5g/L action level of 40 CFR 141.80(c)(2) (2021 revision, in force through the LCR Improvements transition) governs the label.",
+    "usefulness": "The label is a regulatory threshold crossing on a quantity measured months to years after the decision point, not a status copied from the same row. No input comes from the target period. The task requires forward reasoning about corrosion-control history, copper trajectory, system size, source water, state practice and prior replacement obligations, and it maps to an allocation decision about corrosion-control optimization, service-line work and sampling support before the next round. Persistence from the prior round is the main baseline, so skill must come from separating systems that newly cross 15 micrograms per litre from those that regress below it."
+  },
+  "rows": {
+    "train": 257379,
+    "eval": 17368,
+    "holdout": 17568
+  },
+  "evaluation_contract": {
+    "access": "isolated_rows",
+    "cross_row_audit": {
+      "auxiliary_files_review": "Only public/train.csv, public/eval.csv and private/holdout.csv are written; no metric, answer or fixture files are produced.",
+      "probes": [],
+      "rationale": "Rows are one system and target period, uniquely identified by row_id. PWSID is a carry column and repeats across periods by design; the qualification cluster for serially correlated panel rows is PWSID."
+    },
+    "feature_evidence": {
+      "PWSID": {
+        "availability": "carry column; stable system identifier in the LCR and public water system tables",
+        "source": "EPA ECHO SDWA national download, SDWA_LCR_SAMPLES.csv and SDWA_PUB_WATER_SYSTEMS.csv",
+        "status": "verified",
+        "url": "https://echo.epa.gov/tools/data-downloads/sdwa-download-summary"
+      },
+      "ever_exceeded_before": {
+        "availability": "all contributing records precede the decision instant",
+        "source": "EPA ECHO SDWA national download, SDWA_LCR_SAMPLES.csv",
+        "status": "verified",
+        "url": "https://echo.epa.gov/tools/data-downloads/sdwa-download-summary"
+      },
+      "gap_days_between_periods": {
+        "availability": "calendar difference of prior end and target start",
+        "source": "EPA ECHO SDWA national download, SDWA_LCR_SAMPLES.csv",
+        "status": "verified",
+        "url": "https://echo.epa.gov/tools/data-downloads/sdwa-download-summary"
+      },
+      "n_prior_periods_observed": {
+        "availability": "count of dated prior records",
+        "source": "EPA ECHO SDWA national download, SDWA_LCR_SAMPLES.csv",
+        "status": "verified",
+        "url": "https://echo.epa.gov/tools/data-downloads/sdwa-download-summary"
+      },
+      "owner_type_code": {
+        "availability": "current-vintage system attribute treated as time-invariant; historical availability not proven",
+        "source": "EPA ECHO SDWA national download, SDWA_PUB_WATER_SYSTEMS.csv",
+        "status": "assumed",
+        "url": "https://echo.epa.gov/tools/data-downloads/sdwa-download-summary"
+      },
+      "pb90_change_from_previous": {
+        "availability": "derived from dated records; missing when fewer than two prior records exist",
+        "source": "EPA ECHO SDWA national download, SDWA_LCR_SAMPLES.csv",
+        "status": "verified",
+        "url": "https://echo.epa.gov/tools/data-downloads/sdwa-download-summary"
+      },
+      "population_served_count": {
+        "availability": "current-vintage system attribute treated as time-invariant; historical availability not proven",
+        "source": "EPA ECHO SDWA national download, SDWA_PUB_WATER_SYSTEMS.csv",
+        "status": "assumed",
+        "url": "https://echo.epa.gov/tools/data-downloads/sdwa-download-summary"
+      },
+      "primacy_agency_code": {
+        "availability": "system attribute when present, otherwise the first two PWSID characters; current-vintage and assumed stable",
+        "source": "EPA ECHO SDWA national download, SDWA_PUB_WATER_SYSTEMS.csv and PWSID prefix",
+        "status": "assumed",
+        "url": "https://echo.epa.gov/tools/data-downloads/sdwa-download-summary"
+      },
+      "primary_source_code": {
+        "availability": "current-vintage system attribute treated as time-invariant; historical availability not proven",
+        "source": "EPA ECHO SDWA national download, SDWA_PUB_WATER_SYSTEMS.csv",
+        "status": "assumed",
+        "url": "https://echo.epa.gov/tools/data-downloads/sdwa-download-summary"
+      },
+      "prior_cu90_mg_l": {
+        "availability": "same prior period; missing copper remains missing",
+        "source": "EPA ECHO SDWA national download, SDWA_LCR_SAMPLES.csv contiguous CU90 summary record",
+        "status": "verified",
+        "url": "https://echo.epa.gov/tools/data-downloads/sdwa-download-summary"
+      },
+      "prior_lcr_violations_count": {
+        "availability": "dated violations before the decision instant; identified by the RULE_CODE 350 anchor and VALUE_TYPE-scoped violation codes",
+        "source": "EPA ECHO SDWA national download, SDWA_VIOLATIONS_ENFORCEMENT.csv and SDWA_REF_CODE_VALUES.csv scoped by VALUE_TYPE",
+        "status": "verified",
+        "url": "https://echo.epa.gov/tools/data-downloads/sdwa-download-summary"
+      },
+      "prior_lslr_milestone": {
+        "availability": "dated LSLR milestone from the EVENT_MILESTONE_CODE field before the decision instant",
+        "source": "EPA ECHO SDWA national download, SDWA_EVENTS_MILESTONES.csv EVENT_MILESTONE_CODE and SDWA_REF_CODE_VALUES.csv scoped by VALUE_TYPE",
+        "status": "verified",
+        "url": "https://echo.epa.gov/tools/data-downloads/sdwa-download-summary"
+      },
+      "prior_pb90_mg_l": {
+        "availability": "prior period result measured before the decision instant",
+        "source": "EPA ECHO SDWA national download, SDWA_LCR_SAMPLES.csv contiguous PB90 summary record",
+        "status": "verified",
+        "url": "https://echo.epa.gov/tools/data-downloads/sdwa-download-summary"
+      },
+      "prior_pb90_ratio_to_al": {
+        "availability": "deterministic transform of a pre-decision result",
+        "source": "EPA ECHO SDWA national download and 40 CFR 141.80 action level",
+        "status": "verified",
+        "url": "https://www.ecfr.gov/on/2023-01-01/title-40/chapter-I/subchapter-D/part-141/subpart-I/section-141.80"
+      },
+      "prior_period_length_days": {
+        "availability": "calendar difference of prior start and end",
+        "source": "EPA ECHO SDWA national download, SDWA_LCR_SAMPLES.csv",
+        "status": "verified",
+        "url": "https://echo.epa.gov/tools/data-downloads/sdwa-download-summary"
+      },
+      "row_id": {
+        "availability": "deterministic composite of the stripped PWSID and target period start, unique for every constructed row",
+        "source": "constructed from EPA ECHO SDWA national download, SDWA_LCR_SAMPLES.csv PWSID and SAMPLING_START_DATE",
+        "status": "verified",
+        "url": "https://echo.epa.gov/tools/data-downloads/sdwa-download-summary"
+      },
+      "target_period_start": {
+        "availability": "target monitoring period start, the decision instant",
+        "source": "EPA ECHO SDWA national download, SDWA_LCR_SAMPLES.csv SAMPLING_START_DATE",
+        "status": "verified",
+        "url": "https://echo.epa.gov/tools/data-downloads/sdwa-download-summary"
+      }
+    },
+    "limitations": [
+      "Current-vintage administrative snapshot: system size, source, ownership and primacy codes are current values applied to historical periods; their historical availability is not proven.",
+      "LCR summary reporting is uneven across primacy agencies, so the population is the reporting community systems, not every United States community water system.",
+      "No full-row availability ledger exists; training label timing is unverified and this is retrospective research rather than a proven historical forecasting task.",
+      "Rows for the same system are serially correlated and share an unobserved plumbing stock, so effective sample size is below row count.",
+      "Lead service line counts, pipe age, pH and alkalinity are unavailable in SDWIS, so the strongest physical predictors are missing.",
+      "Labels stop at target period start 2023-12-31 to remain under the 15 microgram per litre action level before the 2024 Lead and Copper Rule Improvements transition.",
+      "Reference code lookups are scoped by VALUE_TYPE: LCR violations use the documented RULE_CODE 350 anchor plus VALUE_TYPE-scoped violation codes, and LSLR milestones use EVENT_MILESTONE_CODE. The construction asserts nonzero milestone records and at least one included row with a prior milestone rather than shipping a constant feature; state coding practice may still vary.",
+      "Missing copper, prior-prior lead and target measurements remain missing; unknown outcomes are excluded, never converted to negative labels.",
+      "Rows are system-period events uniquely identified by row_id; PWSID repeats across chronological splits by design, so system-level serial correlation remains and the qualification cluster is PWSID."
+    ],
+    "selection": {
+      "evidence": "Target period SAMPLING_START_DATE is the decision instant; prior LCR measurements, violation begin dates and milestone dates used are strictly before it.",
+      "kind": "prediction_time"
+    },
+    "training_label_timing": "unverified",
+    "use": "retrospective_research",
+    "vintage": {
+      "evidence": "EPA ECHO states the SDWA national download is refreshed quarterly; the supplied source describes a current 2026Q3 snapshot.",
+      "kind": "current_snapshot"
+    }
+  },
+  "limitations": [
+    "Retrospective single-vintage problem: the download is one quarterly SDWIS snapshot (2026Q3 per the source), so system attributes (population served, owner type, primary source, primacy agency) are current values applied to historical periods. They are treated as time-invariant covariates, and this is not evidence that those values were available at each historical decision instant.",
+    "LCR summary reporting to SDWIS is uneven across primacy agencies; some states report only exceedances or only large/medium systems, so the population is whoever reported, not every U.S. community water system. Coverage by state must be reported and the label base rate interpreted per jurisdiction, not nationally.",
+    "The prior period's 90th percentile is the system's own laboratory result, but its entry into SDWIS may post-date the target period's start. The feature is causally clean (all contributing measurements end before the decision instant) but the public record's operational availability at that date is not asserted.",
+    "Monitoring schedule heterogeneity means the outcome horizon ranges from 6 months to 3 years, so rows are not directly comparable in difficulty; horizon length and period length are supplied as features and the horizon distribution must be reported.",
+    "Rows for the same system are serially correlated and share a stable unobserved plumbing stock, so persistence is a strong baseline and effective sample size is well below row count; the chronological split with embargo limits but does not eliminate this.",
+    "Rule drift inside the window: the December 2021 LCR revisions changed sampling site selection and added a lead trigger level, and the 2024 LCR Improvements lower the action level to 0.010 mg/L from 2027. Labels are therefore restricted to periods starting on or before 2023-12-31 under the 15 \u00b5g/L threshold, and results should not be extrapolated to the current rule.",
+    "SDWIS carries no site-level or service-line material data, so the strongest physical predictors (lead service line count, pipe age, water chemistry such as pH and alkalinity) are unavailable; only aggregate 90th-percentile values and system descriptors are usable.",
+    "ECHO's own terms disclaim warranty and discourage robotic querying; redistribution of derived tables is covered by the federal public-domain basis, but any state-supplied third-party material embedded upstream retains whatever rights its originator holds, and no worldwide dedication is claimed.",
+    "Current-vintage administrative snapshot: system size, source, ownership and primacy codes are current values applied to historical periods; their historical availability is not proven.",
+    "LCR summary reporting is uneven across primacy agencies, so the population is the reporting community systems, not every United States community water system.",
+    "No full-row availability ledger exists; training label timing is unverified and this is retrospective research rather than a proven historical forecasting task.",
+    "Rows for the same system are serially correlated and share an unobserved plumbing stock, so effective sample size is below row count.",
+    "Lead service line counts, pipe age, pH and alkalinity are unavailable in SDWIS, so the strongest physical predictors are missing.",
+    "Labels stop at target period start 2023-12-31 to remain under the 15 microgram per litre action level before the 2024 Lead and Copper Rule Improvements transition.",
+    "Reference code lookups are scoped by VALUE_TYPE: LCR violations use the documented RULE_CODE 350 anchor plus VALUE_TYPE-scoped violation codes, and LSLR milestones use EVENT_MILESTONE_CODE. The construction asserts nonzero milestone records and at least one included row with a prior milestone rather than shipping a constant feature; state coding practice may still vary.",
+    "Missing copper, prior-prior lead and target measurements remain missing; unknown outcomes are excluded, never converted to negative labels.",
+    "Rows are system-period events uniquely identified by row_id; PWSID repeats across chronological splits by design, so system-level serial correlation remains and the qualification cluster is PWSID.",
+    "No uncertainty interval; observed differences do not establish universal headroom"
+  ],
+  "qualification": {
+    "gate_version": "1.6.1",
+    "ok": true
+  }
+}

@@ -1,0 +1,54 @@
+{
+  "name": "sdwis-lcr-lead-action-level-next-period",
+  "description": "At the first day of a community water system's next Lead and Copper Rule tap-sampling period, will that period's reported 90th-percentile lead concentration exceed the 15 \u00b5g/L action level?",
+  "target": "next_pb90_exceeds_action_level",
+  "positive_label": 1,
+  "id_columns": [
+    "row_id"
+  ],
+  "columns": [
+    "row_id",
+    "PWSID",
+    "target_period_start",
+    "next_pb90_exceeds_action_level",
+    "prior_pb90_mg_l",
+    "prior_cu90_mg_l",
+    "prior_pb90_ratio_to_al",
+    "pb90_change_from_previous",
+    "n_prior_periods_observed",
+    "ever_exceeded_before",
+    "gap_days_between_periods",
+    "prior_period_length_days",
+    "population_served_count",
+    "primary_source_code",
+    "owner_type_code",
+    "primacy_agency_code",
+    "prior_lcr_violations_count",
+    "prior_lslr_milestone"
+  ],
+  "rows": {
+    "train": 257379,
+    "eval": 17368,
+    "holdout": 17568
+  },
+  "positive_rate": {
+    "train": 0.0326250393388738,
+    "eval": 0.023952095808383235,
+    "holdout": 0.020605646630236795
+  },
+  "split": {
+    "eval": {
+      "end": "2019-01-01T00:00:00.000",
+      "start": "2014-01-01T00:00:00.000"
+    },
+    "holdout": {
+      "end": "2024-01-01T00:00:00.000",
+      "start": "2019-01-01T00:00:00.000"
+    },
+    "train": {
+      "end": "2014-01-01T00:00:00.000",
+      "start": "1995-01-01T00:00:00.000"
+    }
+  },
+  "split_description": "Chronological on target SAMPLING_START_DATE, fixed before any model fitting: train 1995-01-01 to 2013-12-31; eval 2014-01-01 to 2018-12-31; holdout 2019-01-01 to 2023-12-31. Embargo: drop any row whose feature (prior) period SAMPLING_END_DATE is on or after the first day of the split it would fall into, so no feature window crosses a boundary. Rows are never shuffled; each system contributes at most one row per target period, and duplicate PB90 records for the same period are collapsed to the latest SAR_LAST_REPORTED_DATE before pairing. Boundaries and the agency floor are not to be revised after seeing any metric."
+}

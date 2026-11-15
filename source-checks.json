@@ -1,0 +1,293 @@
+{
+  "checks": [
+    {
+      "check": "archive members selected for construction",
+      "observed": "['SDWA_LCR_SAMPLES.csv', 'SDWA_PUB_WATER_SYSTEMS.csv', 'SDWA_VIOLATIONS_ENFORCEMENT.csv', 'SDWA_EVENTS_MILESTONES.csv', 'SDWA_REF_CODE_VALUES.csv']",
+      "expected": "single EPA ECHO SDWA national ZIP with LCR, public water system, violation, milestone and reference tables",
+      "passed": true
+    },
+    {
+      "check": "join key PWSID present in the selected system, sample, violation and milestone tables",
+      "observed": "{'SDWA_LCR_SAMPLES.csv': True, 'SDWA_PUB_WATER_SYSTEMS.csv': True, 'SDWA_VIOLATIONS_ENFORCEMENT.csv': True, 'SDWA_EVENTS_MILESTONES.csv': True}",
+      "expected": "PWSID is the system join key in all four event tables",
+      "passed": true
+    },
+    {
+      "check": "community water system population from the PWS_TYPE_CODE field",
+      "observed": "CWS systems 97156; other system rows 337601; source type counts {'TNCWS': 287941, 'CWS': 97156, 'NTNCWS': 49634, 'NP': 26}",
+      "expected": "include community water systems and record, not abort on, other PWS type codes elsewhere in the source",
+      "passed": true
+    },
+    {
+      "check": "primacy agency code source and fallback",
+      "observed": "field PRIMACY_AGENCY_CODE used; blank values 0 filled from the first two PWSID characters",
+      "expected": "two-character state or EPA region primacy code",
+      "passed": true
+    },
+    {
+      "check": "public water system identifier uniqueness",
+      "observed": "duplicate system rows 0",
+      "expected": "one row per PWSID in SDWA_PUB_WATER_SYSTEMS",
+      "passed": true
+    },
+    {
+      "check": "lead and copper summary record coverage",
+      "observed": "LCR rows scanned 939373; all PB90 rows 900486; all CU90 rows 38887; PB90 community rows 648359; CU90 community rows 23519",
+      "expected": "PB90 and CU90 summary records for community water systems; other contaminant codes and non-community systems are not required to be absent",
+      "passed": true
+    },
+    {
+      "check": "lead and copper summary concentration units",
+      "observed": "unit counts {'mg/L': 671878}; unrecognized unit rows 0",
+      "expected": "all selected PB90 and CU90 summary records use MG/L or a recognized microgram-per-litre or ppb unit convertible to mg/L",
+      "passed": true
+    },
+    {
+      "check": "lead and copper summary measurement parsing",
+      "observed": "numeric measurements 671878 of 671878; missing measurements 0",
+      "expected": "missing measurements remain missing and are not converted to zero; rows needing a missing target label are excluded",
+      "passed": true
+    },
+    {
+      "check": "monitoring period start date parsing",
+      "observed": "undated rows excluded 0; dated rows retained 671878",
+      "expected": "SAMPLING_START_DATE must be a valid date for period sequencing",
+      "passed": true
+    },
+    {
+      "check": "monitoring period end date completeness",
+      "observed": "rows with missing end dates 0 of 671878",
+      "expected": "SAMPLING_END_DATE is required for a period to serve as a prior window; rows missing it are retained only as potential target labels",
+      "passed": true
+    },
+    {
+      "check": "duplicate PB90 and CU90 records for the same system and monitoring period",
+      "observed": "duplicate rows collapsed 64157; period contaminant rows retained 607721",
+      "expected": "one latest-reported summary record per system, contaminant and sampling start date",
+      "passed": true
+    },
+    {
+      "check": "PB90 monitoring period grain after de-duplication",
+      "observed": "PB90 periods 586933; CU90 periods 20788; joined period rows 586933",
+      "expected": "one row per system and PB90 sampling start",
+      "passed": true
+    },
+    {
+      "check": "consecutive PB90 period pairing and four-year horizon limit",
+      "observed": "consecutive pairs retained 462598 of 586933 PB90 periods",
+      "expected": "target period starts strictly after the prior period end and no more than four years later",
+      "passed": true
+    },
+    {
+      "check": "target labels from the target period PB90 result",
+      "observed": "known target labels 462598; unknown target measurements excluded 0; positive labels 13214",
+      "expected": "label is 1 only when target period PB90 exceeds 0.015 mg/L; unknown outcomes are excluded and never made negative",
+      "passed": true
+    },
+    {
+      "check": "lead action level unit conversion and regulatory frame",
+      "observed": "0.015 milligrams per litre corresponds to 15 micrograms per litre",
+      "expected": "40 CFR 141.80(c)(2) lead action level through 2023-12-31",
+      "passed": true,
+      "kind": "unit"
+    },
+    {
+      "check": "system attribute join coverage",
+      "observed": "rows missing system attributes 0 of 462598",
+      "expected": "every included community system has a row in SDWA_PUB_WATER_SYSTEMS",
+      "passed": true
+    },
+    {
+      "check": "prior Lead and Copper Rule violation records",
+      "observed": "identified violation records 314166; VALUE_TYPE scoped violation codes 2; rule codes 3; description columns []",
+      "expected": "dated Lead and Copper Rule violations identified from the violation table using the RULE_CODE 350 anchor and VALUE_TYPE-scoped reference labels",
+      "passed": true
+    },
+    {
+      "check": "reference code value-type scoping",
+      "observed": "violation codes 2; rule codes 3; scoped event milestone codes 2; LCR rule anchor present True; LSLR event anchor present True",
+      "expected": "SDWA_REF_CODE_VALUES filtered by VALUE_TYPE with the RULE_CODE 350 and EVENT_MILESTONE_CODE LSLR anchors",
+      "passed": true
+    },
+    {
+      "check": "lead service line replacement milestone record coverage",
+      "observed": "identified milestone records 36738; scoped reference milestone codes 2; event codes including anchors ['LSLI', 'LSLR']; text columns ['EVENT_COMMENTS_TEXT', 'EVENT_REASON_CODE']",
+      "expected": "EVENT_MILESTONE_CODE LSLR records are present and parsed from the milestone table",
+      "passed": true
+    },
+    {
+      "check": "prior violation and lead service line milestone timing",
+      "observed": "rows with nonzero prior LCR violations 195660; rows with a prior LSLR milestone 10522; LCR violation records 314166; LSLR event codes resolved 2",
+      "expected": "all violation and milestone dates used are strictly before each target period start",
+      "passed": true
+    },
+    {
+      "check": "prior Lead and Copper Rule violation feature population",
+      "observed": "rows with nonzero prior LCR violations 195660 of 462598; identified violation records 314166",
+      "expected": "at least one included row has a dated Lead and Copper Rule violation before its target period so the declared count is not a constant-zero column",
+      "passed": true
+    },
+    {
+      "check": "lead service line replacement milestone feature population",
+      "observed": "rows with a prior LSLR milestone before target start 10522 of 462598; identified milestone records 36738",
+      "expected": "at least one included row has a dated LSLR milestone before its target period so the declared feature is not a constant-zero column",
+      "passed": true
+    },
+    {
+      "check": "primacy agency floor from training-era feature dates only",
+      "observed": "agencies with at least twenty eligible pre-2014 pairs 63; excluded agencies 3; pairs before floor 462598; pairs retained 462513; excluded agency codes ['01', '02', 'GU']",
+      "expected": "exclude agencies contributing fewer than twenty eligible pairs whose feature period ends before 2014-01-01, using no labels",
+      "passed": true
+    },
+    {
+      "check": "fixed chronological split assignment",
+      "observed": "pairs outside the fixed windows excluded 55932; split counts {'train': 257379, 'holdout': 80985, 'eval': 68217}",
+      "expected": "train 1995-01-01 through 2013-12-31, eval 2014-01-01 through 2018-12-31, holdout 2019-01-01 through 2023-12-31; target start strictly before 2024-01-01",
+      "passed": true
+    },
+    {
+      "check": "chronological split and evaluation embargo",
+      "observed": "pairs before embargo 406581; eval pairs dropped for prior period ending on or after 2014-01-01 50849; holdout pairs dropped for prior period ending on or after 2019-01-01 63417; pairs retained 292315",
+      "expected": "eval and holdout features must end before the split start so no feature window crosses a boundary; train is the earliest split and uses only dates before its target period",
+      "passed": true
+    },
+    {
+      "check": "split row and positive-label coverage",
+      "observed": "rows {'train': 257379, 'holdout': 17568, 'eval': 17368}; positives {'eval': 416, 'holdout': 362, 'train': 8397}",
+      "expected": "each fixed split has rows and at least one positive and one negative label after the population and embargo rules",
+      "passed": true
+    },
+    {
+      "check": "constructed row key uniqueness",
+      "observed": "duplicate system and target-period rows 0",
+      "expected": "one row per PWSID and target period start",
+      "passed": true
+    },
+    {
+      "check": "row identifier uniqueness",
+      "observed": "duplicate row_id values 0",
+      "expected": "every written row has a unique deterministic system-period row_id",
+      "passed": true
+    },
+    {
+      "check": "row identifier population",
+      "observed": "empty row identifiers 0",
+      "expected": "every written row has a nonempty system-period identifier",
+      "passed": true
+    },
+    {
+      "check": "binary target values",
+      "observed": "target values [0, 1]",
+      "expected": "target contains only 0 and 1",
+      "passed": true
+    },
+    {
+      "check": "output columns",
+      "observed": "['row_id', 'PWSID', 'target_period_start', 'next_pb90_exceeds_action_level', 'prior_pb90_mg_l', 'prior_cu90_mg_l', 'prior_pb90_ratio_to_al', 'pb90_change_from_previous', 'n_prior_periods_observed', 'ever_exceeded_before', 'gap_days_between_periods', 'prior_period_length_days', 'population_served_count', 'primary_source_code', 'owner_type_code', 'primacy_agency_code', 'prior_lcr_violations_count', 'prior_lslr_milestone']",
+      "expected": "stable row_id and target_period_start keys, carried PWSID, the declared target, and exactly the declared feature columns",
+      "passed": true
+    },
+    {
+      "check": "clustered positive coverage for eval",
+      "observed": "positive rows 416; distinct system clusters 416",
+      "expected": "at least 30 positive rows across at least 20 distinct system clusters",
+      "passed": true
+    },
+    {
+      "check": "clustered positive coverage for holdout",
+      "observed": "positive rows 362; distinct system clusters 362",
+      "expected": "at least 30 positive rows across at least 20 distinct system clusters",
+      "passed": true
+    },
+    {
+      "check": "feature population coverage for prior_pb90_mg_l",
+      "observed": "292315 populated of 292315; missing 0",
+      "expected": "declared feature values are parsed from the source or deterministic transforms; missing values remain missing and are not replaced by zero",
+      "passed": true
+    },
+    {
+      "check": "feature population coverage for prior_cu90_mg_l",
+      "observed": "8448 populated of 292315; missing 283867",
+      "expected": "declared feature values are parsed from the source or deterministic transforms; missing values remain missing and are not replaced by zero",
+      "passed": true
+    },
+    {
+      "check": "feature population coverage for prior_pb90_ratio_to_al",
+      "observed": "292315 populated of 292315; missing 0",
+      "expected": "declared feature values are parsed from the source or deterministic transforms; missing values remain missing and are not replaced by zero",
+      "passed": true
+    },
+    {
+      "check": "feature population coverage for pb90_change_from_previous",
+      "observed": "270725 populated of 292315; missing 21590",
+      "expected": "declared feature values are parsed from the source or deterministic transforms; missing values remain missing and are not replaced by zero",
+      "passed": true
+    },
+    {
+      "check": "feature population coverage for n_prior_periods_observed",
+      "observed": "292315 populated of 292315; missing 0",
+      "expected": "declared feature values are parsed from the source or deterministic transforms; missing values remain missing and are not replaced by zero",
+      "passed": true
+    },
+    {
+      "check": "feature population coverage for ever_exceeded_before",
+      "observed": "292315 populated of 292315; missing 0",
+      "expected": "declared feature values are parsed from the source or deterministic transforms; missing values remain missing and are not replaced by zero",
+      "passed": true
+    },
+    {
+      "check": "feature population coverage for gap_days_between_periods",
+      "observed": "292315 populated of 292315; missing 0",
+      "expected": "declared feature values are parsed from the source or deterministic transforms; missing values remain missing and are not replaced by zero",
+      "passed": true
+    },
+    {
+      "check": "feature population coverage for prior_period_length_days",
+      "observed": "292315 populated of 292315; missing 0",
+      "expected": "declared feature values are parsed from the source or deterministic transforms; missing values remain missing and are not replaced by zero",
+      "passed": true
+    },
+    {
+      "check": "feature population coverage for population_served_count",
+      "observed": "292315 populated of 292315; missing 0",
+      "expected": "declared feature values are parsed from the source or deterministic transforms; missing values remain missing and are not replaced by zero",
+      "passed": true
+    },
+    {
+      "check": "feature population coverage for primary_source_code",
+      "observed": "292257 populated of 292315; missing 58",
+      "expected": "declared feature values are parsed from the source or deterministic transforms; missing values remain missing and are not replaced by zero",
+      "passed": true
+    },
+    {
+      "check": "feature population coverage for owner_type_code",
+      "observed": "292297 populated of 292315; missing 18",
+      "expected": "declared feature values are parsed from the source or deterministic transforms; missing values remain missing and are not replaced by zero",
+      "passed": true
+    },
+    {
+      "check": "feature population coverage for primacy_agency_code",
+      "observed": "292315 populated of 292315; missing 0",
+      "expected": "declared feature values are parsed from the source or deterministic transforms; missing values remain missing and are not replaced by zero",
+      "passed": true
+    },
+    {
+      "check": "feature population coverage for prior_lcr_violations_count",
+      "observed": "292315 populated of 292315; missing 0",
+      "expected": "declared feature values are parsed from the source or deterministic transforms; missing values remain missing and are not replaced by zero",
+      "passed": true
+    },
+    {
+      "check": "feature population coverage for prior_lslr_milestone",
+      "observed": "292315 populated of 292315; missing 0",
+      "expected": "declared feature values are parsed from the source or deterministic transforms; missing values remain missing and are not replaced by zero",
+      "passed": true
+    },
+    {
+      "check": "public and private CSV outputs written",
+      "observed": "{'/output/extract/public/train.csv': 26019143, '/output/extract/public/eval.csv': 1790624, '/output/extract/private/holdout.csv': 1794860}",
+      "expected": "three nonempty CSV files with identical columns under output",
+      "passed": true
+    }
+  ]
+}

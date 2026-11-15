@@ -1,0 +1,23 @@
+{
+  "publisher-terms.snapshot": {
+    "url": "https://edg.epa.gov/EPA_Data_License.htm",
+    "bytes": 10968,
+    "sha256": "deff40a15da6593a56f4c3bf4a975b1430c809635d382da95cb9dbd3da4ef052",
+    "retrieved_at_unix": 1794753402.8713121,
+    "transport_attempts": 1
+  },
+  "publisher-documentation.snapshot": {
+    "url": "https://echo.epa.gov/tools/data-downloads/sdwa-download-summary",
+    "bytes": 159335,
+    "sha256": "33dd7d2d763e8a9a200c91d29d25c204cdeff9bd83553ccd3d3d59a7847271ed",
+    "retrieved_at_unix": 1794753404.013833,
+    "transport_attempts": 1
+  },
+  "SDWA_latest_downloads.zip": {
+    "url": "https://echo.epa.gov/files/echodownloads/SDWA_latest_downloads.zip",
+    "bytes": 558010511,
+    "sha256": "4d92d5f46b423742d5fd608257dc63ef666a832d9211199c28434cd8f41dccb0",
+    "retrieved_at_unix": 1794753481.1157951,
+    "transport_attempts": 1
+  }
+}

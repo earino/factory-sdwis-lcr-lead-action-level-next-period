@@ -1,0 +1,11 @@
+{
+  "ok": true,
+  "terms_url": "https://edg.epa.gov/EPA_Data_License.htm",
+  "terms_sha256": "deff40a15da6593a56f4c3bf4a975b1430c809635d382da95cb9dbd3da4ef052",
+  "documentation_url": "https://echo.epa.gov/tools/data-downloads/sdwa-download-summary",
+  "documentation_sha256": "33dd7d2d763e8a9a200c91d29d25c204cdeff9bd83553ccd3d3d59a7847271ed",
+  "quoted_excerpt": "Unless otherwise specified, all data produced by the U.S EPA is by default in the public domain and is not subject to domestic copyright protection under 17 U.S.C. \u00a7 105.",
+  "excerpt_found": true,
+  "excerpt_match": "contiguous",
+  "scope": "Captured publisher bytes and quote presence; semantic applicability reviewed separately"
+}

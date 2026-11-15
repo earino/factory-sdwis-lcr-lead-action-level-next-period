@@ -1,0 +1,179 @@
+{
+  "construction": {
+    "access_recipe": "One unauthenticated GET of https://echo.epa.gov/files/echodownloads/SDWA_latest_downloads.zip, cached to disk; do not issue repeated queries against ECHO. Open the ZIP and stream SDWA_LCR_SAMPLES.csv in chunks (it is expected to be the largest member), keeping only rows with CONTAMINANT_CODE in {PB90, CU90} and PWSIDs whose PWS_TYPE_CODE is CWS. Parse dates as MM/DD/YYYY, normalize SAMPLE_MEASURE to mg/L using UNIT_OF_MEASURE (divide by 1000 where the unit is \u00b5g/L), collapse duplicates per (PWSID, contaminant, SAMPLING_START_DATE) to the record with the latest SAR_LAST_REPORTED_DATE, then pivot to one row per (PWSID, SAMPLING_START_DATE) carrying PB90 and CU90 with SAMPLING_END_DATE. Sort by PWSID and SAMPLING_START_DATE, take consecutive pairs, keep pairs where 0 <= gap and target start <= feature end + 4 years, join the frozen feature set, apply the primacy-agency floor on the training window only, then cut train/eval/holdout by target SAMPLING_START_DATE with the stated embargo, and write train.csv, eval.csv, holdout.csv plus a coverage report (rows and positives by split, by primacy agency, by year, and the base rate among rows whose prior period was at or below 0.015 mg/L).",
+    "expected_size": "ZIP is listed by EPA at 457 MB (observed on the download page). SDWA_LCR_SAMPLES is expected to be the largest member, on the order of 10^7 raw sample/summary rows nationally. After filtering to PB90/CU90 summary records for CWS with at least two periods, expect order 10^5 system-period rows and order 10^2 to 10^3 distinct systems per split; these figures are estimates and must be replaced by the coverage report actually printed by the construction run. The run should abort with a clear message rather than silently proceeding if PB90 rows for CWS are absent or if any split has fewer than a few hundred positives.",
+    "format": "ZIP archive containing several comma-separated text files. Tables used: SDWA_LCR_SAMPLES.csv (label and prior-period features), SDWA_PUB_WATER_SYSTEMS.csv (population and system attributes), SDWA_VIOLATIONS_ENFORCEMENT.csv (prior rule violations, begin dates only), SDWA_EVENTS_MILESTONES.csv (LSLR milestones), SDWA_REF_CODE_VALUES.csv (contaminant and violation code labels for value checks).",
+    "source_examples": "Contaminant codes to confirm in SDWA_REF_CODE_VALUES.csv: PB90 (lead summary) and CU90 (copper summary); a state primacy report shows the same codes labelled 'PB90 - LEAD SUMMARY' and 'CU90 - COPPER SUMMARY'. UNIT_OF_MEASURE expected 'MG/L' with values such as 0.000, 0.00950, 1.250; monitoring periods appear as 6M1ST/6M2ND, annual, and triennial with SAMPLING_START_DATE/SAMPLING_END_DATE pairs such as 01-01-2025 / 12-31-2027. PWSID format is a two-letter primacy code plus seven digits (e.g. CA4200822). Sanity checks the code must print: count of PB90 vs CU90 rows per state, share of rows with UNIT_OF_MEASURE='MG/L', distribution of period lengths in days, and the fraction of consecutive pairs whose target period starts after the feature period ends."
+  },
+  "dataset_id": "sdwis-lcr-lead-action-level-next-period",
+  "evidence": [
+    {
+      "claim": "The SDWA national download is a single direct ZIP with no account, updated quarterly",
+      "quote": "National download of Safe Drinking Water Act data compiled from the latest refresh of Safe Drinking Water Information System (SDWIS) in ECHO. This dataset is updated quarterly.",
+      "url": "https://echo.epa.gov/tools/data-downloads"
+    },
+    {
+      "claim": "SDWA_LCR_Samples.csv is keyed to a monitoring period with explicit start and end dates and holds 90th-percentile lead/copper summary results",
+      "quote": "Date of the last day of the monitoring period in which 90th percentile data for lead or copper was acquired (MM/DD/YYYY format).",
+      "url": "https://echo.epa.gov/tools/data-downloads/sdwa-download-summary"
+    },
+    {
+      "claim": "Under the rule version in force for the label window, the lead action level is a 90th-percentile threshold of 15 \u00b5g/L",
+      "quote": "The lead action level is exceeded if the 90th percentile concentration of lead as specified in paragraph (c)(4) of this section is greater than 15 \u00b5g/L.",
+      "url": "https://www.ecfr.gov/on/2023-01-01/title-40/chapter-I/subchapter-D/part-141/subpart-I/section-141.80"
+    },
+    {
+      "claim": "EPA designates its data as public domain in the U.S. under 17 U.S.C. \u00a7 105",
+      "quote": "Unless otherwise specified, all data produced by the U.S EPA is by default in the public domain and is not subject to domestic copyright protection under 17 U.S.C. \u00a7 105.",
+      "url": "https://edg.epa.gov/EPA_Data_License.htm"
+    },
+    {
+      "claim": "Statutory basis: copyright protection is unavailable for works of the U.S. Government, which is why redistribution needs no licence grant",
+      "quote": "Copyright protection under this title is not available for any work of the United States Government, but the United States Government is not precluded from receiving and holding copyrights transferred to it by assignment, bequest, or otherwise.",
+      "url": "https://www.govinfo.gov/content/pkg/USCODE-2022-title17/html/USCODE-2022-title17-chap1-sec105.htm"
+    },
+    {
+      "claim": "SDWIS is a federal data warehouse populated by statutorily required state reporting, i.e. a U.S. Government compilation rather than a private dataset",
+      "quote": "The Safe Drinking Water Act requires states to report drinking water information periodically to EPA.",
+      "url": "https://www.epa.gov/ground-water-and-drinking-water/safe-drinking-water-information-system-sdwis-federal-reporting"
+    },
+    {
+      "claim": "Bulk access expectation: ECHO objects to programmed querying, so construction must fetch the single ZIP once and cache it",
+      "quote": "ECHO is not designed for large scale data transfers or robotic queries.",
+      "url": "https://echo.epa.gov/resources/echo-data/about-the-data"
+    },
+    {
+      "claim": "Independent primacy-agency view confirming that PB90 lead summary values are reported once per monitoring period with period begin/end dates",
+      "quote": "PB90 - LEAD SUMMARY",
+      "url": "https://sdwis.waterboards.ca.gov/PDWW/JSP/LeadAndCopperSampleSummaryResults.jsp?tinwsys_is_number=9542&tinwsys_st_code=CA"
+    },
+    {
+      "claim": "Limitation: the 2024 Lead and Copper Rule Improvements lower the lead action level to 0.010 mg/L with compliance from 2027, which is why the label window stops at 2023-12-31",
+      "quote": "The lead action level is exceeded if the 90th percentile concentration of lead as specified in paragraph (c)(3) of this section is greater than 0.010 mg/L.",
+      "url": "https://www.ecfr.gov/current/title-40/chapter-I/subchapter-D/part-141/subpart-I/section-141.80"
+    }
+  ],
+  "limitations": [
+    "Retrospective single-vintage problem: the download is one quarterly SDWIS snapshot (2026Q3 per the source), so system attributes (population served, owner type, primary source, primacy agency) are current values applied to historical periods. They are treated as time-invariant covariates, and this is not evidence that those values were available at each historical decision instant.",
+    "LCR summary reporting to SDWIS is uneven across primacy agencies; some states report only exceedances or only large/medium systems, so the population is whoever reported, not every U.S. community water system. Coverage by state must be reported and the label base rate interpreted per jurisdiction, not nationally.",
+    "The prior period's 90th percentile is the system's own laboratory result, but its entry into SDWIS may post-date the target period's start. The feature is causally clean (all contributing measurements end before the decision instant) but the public record's operational availability at that date is not asserted.",
+    "Monitoring schedule heterogeneity means the outcome horizon ranges from 6 months to 3 years, so rows are not directly comparable in difficulty; horizon length and period length are supplied as features and the horizon distribution must be reported.",
+    "Rows for the same system are serially correlated and share a stable unobserved plumbing stock, so persistence is a strong baseline and effective sample size is well below row count; the chronological split with embargo limits but does not eliminate this.",
+    "Rule drift inside the window: the December 2021 LCR revisions changed sampling site selection and added a lead trigger level, and the 2024 LCR Improvements lower the action level to 0.010 mg/L from 2027. Labels are therefore restricted to periods starting on or before 2023-12-31 under the 15 \u00b5g/L threshold, and results should not be extrapolated to the current rule.",
+    "SDWIS carries no site-level or service-line material data, so the strongest physical predictors (lead service line count, pipe age, water chemistry such as pH and alkalinity) are unavailable; only aggregate 90th-percentile values and system descriptors are usable.",
+    "ECHO's own terms disclaim warranty and discourage robotic querying; redistribution of derived tables is covered by the federal public-domain basis, but any state-supplied third-party material embedded upstream retains whatever rights its originator holds, and no worldwide dedication is claimed."
+  ],
+  "reason": "EPA's ECHO SDWA bulk download exposes the SDWIS Lead and Copper Rule summary table (SDWA_LCR_SAMPLES.csv) with one dated 90th-percentile lead/copper record per system per monitoring period, so a forward binary target can be built from a system's own earlier periods against a threshold fixed in regulation (15 \u00b5g/L, 40 CFR 141.80(c)(2) as in effect through 2024). The file is a single anonymous direct GET (457 MB ZIP, quarterly), every field used as an input is documented in EPA's data element dictionary, rows are measurements dated strictly before the decision instant, and reuse rests on 17 U.S.C. \u00a7 105 plus EPA's own standard open-data license rather than on an invented grant. This is distinct from the already-selected SDWIS tasks (next-survey significant deficiency, unresolved health-based violation, first UCMR 5 sample) in both target and unit of analysis. Main risks are unmeasured row counts and uneven state reporting of LCR summaries, both stated as limitations and as checks the construction run must report, not as reasons to defer.",
+  "source": {
+    "attribution": "No credit is required by the publisher. Recommended credit: \"U.S. Environmental Protection Agency, Enforcement and Compliance History Online (ECHO), SDWA dataset derived from the Safe Drinking Water Information System (SDWIS), extracted <quarter>\".",
+    "citation": "",
+    "documentation_url": "https://echo.epa.gov/tools/data-downloads/sdwa-download-summary",
+    "license": "U.S. Government work \u2014 public domain in the United States under 17 U.S.C. \u00a7 105 (EPA Standard Open Data License); no publisher licence grant is required and none is implied for any third-party material",
+    "publisher": "U.S. Environmental Protection Agency (EPA) \u2014 Enforcement and Compliance History Online (ECHO), SDWA dataset compiled from the Safe Drinking Water Information System (SDWIS); underlying LCR results are reported to EPA by state/tribal primacy agencies",
+    "redistribution": true,
+    "terms_excerpt": "Unless otherwise specified, all data produced by the U.S EPA is by default in the public domain and is not subject to domestic copyright protection under 17 U.S.C. \u00a7 105.",
+    "terms_url": "https://edg.epa.gov/EPA_Data_License.htm",
+    "urls": [
+      "https://echo.epa.gov/files/echodownloads/SDWA_latest_downloads.zip"
+    ]
+  },
+  "task": {
+    "decision_user": "State/tribal drinking-water primacy agency compliance staff and utility corrosion-control managers allocating corrosion-control optimization, lead service line replacement, and sampling support before the next round begins.",
+    "features": [
+      {
+        "availability": "prior period result measured before the decision instant",
+        "evidence_url": "https://echo.epa.gov/tools/data-downloads/sdwa-download-summary",
+        "meaning": "Lead 90th-percentile concentration reported for the immediately preceding monitoring period, converted to mg/L.",
+        "name": "prior_pb90_mg_l"
+      },
+      {
+        "availability": "same prior period; missing copper remains missing",
+        "evidence_url": "https://echo.epa.gov/tools/data-downloads/sdwa-download-summary",
+        "meaning": "Copper 90th-percentile concentration for the same prior period, converted to mg/L.",
+        "name": "prior_cu90_mg_l"
+      },
+      {
+        "availability": "deterministic transform of a pre-decision result",
+        "evidence_url": "https://www.ecfr.gov/on/2023-01-01/title-40/chapter-I/subchapter-D/part-141/subpart-I/section-141.80",
+        "meaning": "prior_pb90_mg_l divided by the 0.015 mg/L action level.",
+        "name": "prior_pb90_ratio_to_al"
+      },
+      {
+        "availability": "derived from dated records; missing when fewer than two prior records exist",
+        "evidence_url": "https://echo.epa.gov/tools/data-downloads/sdwa-download-summary",
+        "meaning": "Difference between the prior PB90 result and the PB90 result before it, in mg/L.",
+        "name": "pb90_change_from_previous"
+      },
+      {
+        "availability": "count of dated prior records",
+        "evidence_url": "https://echo.epa.gov/tools/data-downloads/sdwa-download-summary",
+        "meaning": "Count of dated PB90 monitoring periods on record before the target period start.",
+        "name": "n_prior_periods_observed"
+      },
+      {
+        "availability": "all contributing records precede the decision instant",
+        "evidence_url": "https://www.ecfr.gov/on/2023-01-01/title-40/chapter-I/subchapter-D/part-141/subpart-I/section-141.80",
+        "meaning": "Whether any PB90 record before the target period start exceeded 0.015 mg/L.",
+        "name": "ever_exceeded_before"
+      },
+      {
+        "availability": "calendar difference of prior end and target start",
+        "evidence_url": "https://echo.epa.gov/tools/data-downloads/sdwa-download-summary",
+        "meaning": "Days between the prior period SAMPLING_END_DATE and the target period SAMPLING_START_DATE.",
+        "name": "gap_days_between_periods"
+      },
+      {
+        "availability": "calendar difference of prior start and end",
+        "evidence_url": "https://echo.epa.gov/tools/data-downloads/sdwa-download-summary",
+        "meaning": "Length of the prior monitoring period in days.",
+        "name": "prior_period_length_days"
+      },
+      {
+        "availability": "current-vintage system attribute treated as time-invariant; historical availability not proven",
+        "evidence_url": "https://echo.epa.gov/tools/data-downloads/sdwa-download-summary",
+        "meaning": "Estimated average daily population served, a system-size measure.",
+        "name": "population_served_count"
+      },
+      {
+        "availability": "current-vintage system attribute treated as time-invariant; historical availability not proven",
+        "evidence_url": "https://echo.epa.gov/tools/data-downloads/sdwa-download-summary",
+        "meaning": "Ground water, surface water or purchased source category.",
+        "name": "primary_source_code"
+      },
+      {
+        "availability": "current-vintage system attribute treated as time-invariant; historical availability not proven",
+        "evidence_url": "https://echo.epa.gov/tools/data-downloads/sdwa-download-summary",
+        "meaning": "Ownership category.",
+        "name": "owner_type_code"
+      },
+      {
+        "availability": "system attribute when present, otherwise the first two PWSID characters; current-vintage and assumed stable",
+        "evidence_url": "https://echo.epa.gov/tools/data-downloads/sdwa-download-summary",
+        "meaning": "Two-character state or EPA region primacy code.",
+        "name": "primacy_agency_code"
+      },
+      {
+        "availability": "dated violations before the decision instant; identified by the RULE_CODE 350 anchor and VALUE_TYPE-scoped violation codes",
+        "evidence_url": "https://echo.epa.gov/tools/data-downloads/sdwa-download-summary",
+        "meaning": "Count of identified Lead and Copper Rule violations with NON_COMPL_PER_BEGIN_DATE before the target period start.",
+        "name": "prior_lcr_violations_count"
+      },
+      {
+        "availability": "dated LSLR milestone from the EVENT_MILESTONE_CODE field before the decision instant",
+        "evidence_url": "https://echo.epa.gov/tools/data-downloads/sdwa-download-summary",
+        "meaning": "Whether an identified lead service line replacement milestone was recorded before the target period start.",
+        "name": "prior_lslr_milestone"
+      }
+    ],
+    "outcome_horizon": "One monitoring period: 6 months, 12 months, or 36 months after the decision instant depending on the system's schedule category; pairs whose target period starts more than 4 years after the decision instant are excluded.",
+    "population": "Community water systems in the EPA ECHO SDWA national download whose PWS_TYPE_CODE field is CWS and that have at least two PB90 lead 90th-percentile summary records, where the target PB90 period starts strictly after the prior PB90 period end and no more than four years later, with target period start on or before 2023-12-31. No filter on current PWS_ACTIVITY_CODE. Primacy agencies with fewer than 20 eligible pairs whose prior period ended before 2014-01-01 are excluded from all splits; this floor uses training-era feature dates only.",
+    "prediction_time": "First day, the SAMPLING_START_DATE, of the target PB90 monitoring period. Every prior lead or copper measurement, violation date and milestone date used is strictly before that date; current-vintage system attributes are time-invariant covariates.",
+    "question": "At the first day of a community water system's next Lead and Copper Rule tap-sampling period, will that period's reported 90th-percentile lead concentration exceed the 15 \u00b5g/L action level?",
+    "simple_references": "Persistence: predict the prior period exceedance status. Threshold rule: predict 1 whenever prior_pb90_mg_l is above 0.015. Calendar control: exceedance rate by target year. Identity controls: primacy-agency rate, owner-type rate and population-size band rate. Majority class rate per split. Report the base rate among rows whose prior period was at or below the action level, because that is where operational value sits.",
+    "split_policy": "Chronological on target SAMPLING_START_DATE, fixed before any model fitting: train 1995-01-01 to 2013-12-31; eval 2014-01-01 to 2018-12-31; holdout 2019-01-01 to 2023-12-31. Embargo: drop any row whose feature (prior) period SAMPLING_END_DATE is on or after the first day of the split it would fall into, so no feature window crosses a boundary. Rows are never shuffled; each system contributes at most one row per target period, and duplicate PB90 records for the same period are collapsed to the latest SAR_LAST_REPORTED_DATE before pairing. Boundaries and the agency floor are not to be revised after seeing any metric.",
+    "target": "1 if the target monitoring period's PB90 record (lead 90th-percentile summary, SDWA_LCR_SAMPLES.CONTAMINANT_CODE = PB90) has SAMPLE_MEASURE > 0.015 mg/L, else 0. Target periods are restricted to SAMPLING_START_DATE <= 2023-12-31 so the 15 \u00b5g/L action level of 40 CFR 141.80(c)(2) (2021 revision, in force through the LCR Improvements transition) governs the label.",
+    "usefulness": "The label is a regulatory threshold crossing on a quantity measured months to years after the decision point, not a status copied from the same row. No input comes from the target period. The task requires forward reasoning about corrosion-control history, copper trajectory, system size, source water, state practice and prior replacement obligations, and it maps to an allocation decision about corrosion-control optimization, service-line work and sampling support before the next round. Persistence from the prior round is the main baseline, so skill must come from separating systems that newly cross 15 micrograms per litre from those that regress below it."
+  },
+  "title": "Will a U.S. community water system exceed the lead action level in its next Lead and Copper Rule monitoring period? Forward prediction from prior 90th-percentile results",
+  "verdict": "ready"
+}
